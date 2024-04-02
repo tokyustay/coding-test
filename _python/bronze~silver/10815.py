@@ -7,7 +7,7 @@ def binary_search(arr, x, start, end) :
         return
     if start > end :
         d.append(0)
-        return
+        return                   # return 1, return 0은 1과 0을 반환하지않음
     if arr[mid] > x :
         end = mid - 1
     elif arr[mid] < x :
@@ -31,4 +31,4 @@ d = []
 for i in check :
     binary_search(arr, i, 0, len(arr) - 1)
 
-print(d)
+print(*d)
