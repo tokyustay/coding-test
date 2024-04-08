@@ -16,6 +16,14 @@ def bfs (graph, start, visited):
                 visited[i] = cnt
                 cnt += 1
 
+def dfs(graph, start, visited) :
+    global cnt
+    visited[start] = cnt
+    graph[start].sort()
+    for i in graph[start] :
+        if visited[i] == 0 :
+            cnt += 1
+            dfs(graph, i, visited)
 
 n, m, v = map(int, input().split())
 
@@ -31,8 +39,13 @@ for i in range(m) :
 for i in range(1, len(visited)) :
     graph[i].sort()
 
+dfs(graph, v, visited)
+
+print(*visited[1:])
+
+visited = [0]*(n+1)
+cnt = 1
 
 bfs(graph, v, visited)
 
-for i in range(1, len(visited)) :
-    print(visited[i])
+print(*visited[1:])

@@ -29,7 +29,7 @@ for i in range(m) :
     graph[b].append(a)
 
 for i in range(1, len(visited)) :
-    graph[i].sort()
+    graph[i].sort(reverse= True)
 
 
 bfs(graph, v, visited)
