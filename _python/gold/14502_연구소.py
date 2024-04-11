@@ -1,56 +1,56 @@
 from collections import deque
 import copy
-n, m = map(int, input().split())
-graph = []
-dx = [0, 0, 1, -1]
-dy = [1, -1, 0, 0]
 
-def bfs():
-    queue = deque()
-    tmp_graph = copy.deepcopy(graph)
-
-    for i in range(n):
-        for j in range(m):
-            if tmp_graph[i][j] == 2:
-                queue.append((i, j))
-
-    while queue:
-        x, y = queue.popleft()
-
-        for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-
-            if nx < 0 or nx >= n or ny < 0 or ny >= m:
-                continue
-            if tmp_graph[nx][ny] == 0: 
-                tmp_graph[nx][ny] = 2 
-                queue.append((nx, ny)) 
-
-    global answer
-    cnt = 0
-
-    for i in range(n):
-        cnt += tmp_graph[i].count(0)
-
-    answer = max(answer, cnt)
-
-def makeWall(cnt):
-    if cnt == 3:
+def make_wall(cnt) :
+    if cnt == 3 : 
         bfs()
         return
 
-    for i in range(n):
-        for j in range(m):
-            if graph[i][j] == 0: # 빈 공간이라면 벽 세우기 가능
-                graph[i][j] = 1 # 벽을 세우고
-                makeWall(cnt+1) # 다시 두번째 벽 세우러 간다
-                for k in range(len(graph)) :
-                    print(graph[k])
-                graph[i][j] = 0 # 다시 벽을 허무는 과정 (백트래킹)
+    for i in range(r) :
+        for j in range(c) :
+            if lab[i][j] == 0 :
+                lab[i][j] = 1
+                make_wall(cnt + 1)
+                lab[i][j] = 0
 
-for i in range(n):
-    graph.append(list(map(int, input().split())))
-answer = 0
-makeWall(0)
-print(answer)
+def bfs() :
+    queue = deque()
+    temp = copy.deepcopy(lab)
+
+    for i in range(r) :
+        for j in range(c) :
+            if temp[i][j] == 2 :
+                queue.append((i,j))
+
+    while queue :
+        x, y = queue.popleft()
+
+        for i in range(4) :
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if nx < 0 or ny < 0 or nx >= r or ny >= c :
+                continue
+            if temp[nx][ny] == 0 :
+                temp[nx][ny] = 2
+                queue.append((nx,ny))
+    
+    global ans
+    check = 0
+    for i in range(r) :
+        check += temp[i].count(0)
+
+    ans = max(ans, check)     
+
+dx = [0,0,1,-1]
+dy = [1,-1,0,0]
+ans = 0
+r, c = map(int, input().split())
+
+lab = [[] for _ in range(r)]
+for i in range(r) :
+    lab[i] = list(map(int, input().split()))
+
+make_wall(0)
+print(ans)
+
+# copy = deepcopy, shallowcopy는 주소값도 공유(b = a[])
