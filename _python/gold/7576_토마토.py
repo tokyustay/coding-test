@@ -26,6 +26,6 @@ for i in maped :
     for j in i :
         if j == 0:
             print(-1)
-            break
+            exit(0)
     result = max(result, max(i))
 print(result - 1)        
